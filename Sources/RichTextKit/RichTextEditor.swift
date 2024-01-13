@@ -104,7 +104,7 @@ public struct RichTextEditor: ViewRepresentable {
 
     #if iOS || os(tvOS)
     public func makeUIView(context: Context) -> some UIView {
-        textView.setup(with: text.wrappedValue, format: format)
+        textView.setup(with: text.wrappedValue, format: format, scrollingDisabled: richTextContext.scrollingDisabled)
         viewConfiguration(textView)
         return textView
     }
@@ -114,7 +114,7 @@ public struct RichTextEditor: ViewRepresentable {
 
     #if macOS
     public func makeNSView(context: Context) -> some NSView {
-        textView.setup(with: text.wrappedValue, format: format)
+        textView.setup(with: text.wrappedValue, format: format, scrollingDisabled: richTextContext.scrollingDisabled)
         viewConfiguration(textView)
         return scrollView
     }

@@ -24,6 +24,7 @@ import AppKit
  supports images.
  */
 open class RichTextView: NSTextView, RichTextViewComponent {
+    
 
     // MARK: - Properties
 
@@ -35,7 +36,11 @@ open class RichTextView: NSTextView, RichTextViewComponent {
 
     /// The image configuration to use by the rich text view.
     public var imageConfiguration: RichTextImageConfiguration = .disabled
-
+    
+    /**
+     Disables the scrolling in the NSTextView
+     */
+    public var scrollingDisabled: Bool = false
 
     // MARK: - Overrides
 
@@ -78,6 +83,20 @@ open class RichTextView: NSTextView, RichTextViewComponent {
         return super.performDragOperation(draggingInfo)
     }
 
+    
+    open override func scrollWheel(with event: NSEvent)
+    {
+        guard scrollingDisabled else {
+            super.scrollWheel(with: event)
+           return
+        }
+        
+        // 1st nextResponder is NSClipView
+        // 2nd nextResponder is NSScrollView
+        // 3rd nextResponder is NSResponder SwiftUIPlatformViewHost
+        self.nextResponder?.nextResponder?.nextResponder?.scrollWheel(with: event)
+    }
+
 
     // MARK: - Setup
 
@@ -91,8 +110,10 @@ open class RichTextView: NSTextView, RichTextViewComponent {
      */
     open func setup(
         with text: NSAttributedString,
-        format: RichTextDataFormat
+        format: RichTextDataFormat,
+        scrollingDisabled: Bool = false
     ) {
+        self.scrollingDisabled = scrollingDisabled
         attributedString = .empty
         setupInitialFontSize()
         attributedString = text

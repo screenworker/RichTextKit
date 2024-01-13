@@ -34,7 +34,7 @@ open class RichTextView: UITextView, RichTextViewComponent {
         format: RichTextDataFormat = .archivedData
     ) throws {
         self.init()
-        try self.setup(with: data, format: format)
+        try self.setup(with: data, format: format, scrollingDisabled: false)
     }
 
     public convenience init(
@@ -42,12 +42,16 @@ open class RichTextView: UITextView, RichTextViewComponent {
         format: RichTextDataFormat = .archivedData
     ) {
         self.init()
-        self.setup(with: string, format: format)
+        self.setup(with: string, format: format, scrollingDisabled: false)
     }
 
 
     // MARK: - Properties
 
+    /// Disables the scrolling in the NSTextView
+    public var scrollingDisabled: Bool = false
+
+    
     /// The style to use when highlighting text in the view.
     public var highlightingStyle: RichTextHighlightingStyle = .standard
 
@@ -105,7 +109,7 @@ open class RichTextView: UITextView, RichTextViewComponent {
             if frame.size == .zero { return }
             if !isInitialFrameSetupNeeded { return }
             isInitialFrameSetupNeeded = false
-            setup(with: attributedString, format: richTextDataFormat)
+            setup(with: attributedString, format: richTextDataFormat, scrollingDisabled: scrollingDisabled)
         }
     }
 
@@ -150,8 +154,10 @@ open class RichTextView: UITextView, RichTextViewComponent {
      */
     open func setup(
         with text: NSAttributedString,
-        format: RichTextDataFormat
+        format: RichTextDataFormat,
+        scrollingDisabled: Bool
     ) {
+        self.scrollingDisabled = scrollingDisabled
         attributedString = .empty
         setupInitialFontSize()
         imageConfiguration = standardImageConfiguration(for: format)
