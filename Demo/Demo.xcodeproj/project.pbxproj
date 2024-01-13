@@ -31,6 +31,7 @@
 		A9E50316283A23EE00BA5101 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9E50303283A23EE00BA5101 /* Assets.xcassets */; };
 		A9E50323283A245D00BA5101 /* RichTextKit in Frameworks */ = {isa = PBXBuildFile; productRef = A9E50322283A245D00BA5101 /* RichTextKit */; };
 		A9E50325283A246100BA5101 /* RichTextKit in Frameworks */ = {isa = PBXBuildFile; productRef = A9E50324283A246100BA5101 /* RichTextKit */; };
+		D01BA6C32B52FFE800954A3E /* EditorInlineScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01BA6C22B52FFE800954A3E /* EditorInlineScreen.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,7 @@
 		A9E5030E283A23EE00BA5101 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9E50310283A23EE00BA5101 /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
 		A9E50320283A240C00BA5101 /* richtextkit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = richtextkit; path = ..; sourceTree = "<group>"; };
+		D01BA6C22B52FFE800954A3E /* EditorInlineScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorInlineScreen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +138,7 @@
 				A9E26F8A29512E0600EECFF3 /* AboutCommand.swift */,
 				A9784699284D6A6700DF0CEA /* ContentView.swift */,
 				A978468C284D691900DF0CEA /* EditorScreen.swift */,
+				D01BA6C22B52FFE800954A3E /* EditorInlineScreen.swift */,
 				A9E50310283A23EE00BA5101 /* macOS.entitlements */,
 				A978467D284D560B00DF0CEA /* MainMenu.swift */,
 				A9D8E4822944878000B42858 /* SidebarToggleButton.swift */,
@@ -279,6 +282,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D01BA6C32B52FFE800954A3E /* EditorInlineScreen.swift in Sources */,
 				A909DC51294B8C8000A2CA3C /* ViewDebug.swift in Sources */,
 				A978468D284D691900DF0CEA /* EditorScreen.swift in Sources */,
 				A978467F284D560B00DF0CEA /* MainMenu.swift in Sources */,

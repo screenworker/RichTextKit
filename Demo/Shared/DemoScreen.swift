@@ -12,6 +12,7 @@ enum DemoScreen: String, Equatable, Identifiable {
 
     case about
     case editor
+    case editorInline
 }
 
 extension DemoScreen {
@@ -21,7 +22,7 @@ extension DemoScreen {
     var icon: Image {
         switch self {
         case .about: return .about
-        case .editor: return .textEditor
+        case .editor, .editorInline: return .textEditor
         }
     }
 
@@ -37,6 +38,7 @@ extension DemoScreen {
         switch self {
         case .about: return "About"
         case .editor: return "Editor"
+        case .editorInline: return "Editor Inline"
         }
     }
 
@@ -52,6 +54,10 @@ extension DemoScreen {
         switch self {
         case .editor:
             EditorScreen()
+                .navigationTitle("RichTextKit")
+            
+        case .editorInline:
+            EditorInlineScreen()
                 .navigationTitle("RichTextKit")
         case .about:
             AboutScreen()
