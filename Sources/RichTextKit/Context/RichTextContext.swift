@@ -163,6 +163,10 @@ public class RichTextContext: ObservableObject {
     /// Set this property to trigger a range change.
     @Published
     var shouldSelectRange = NSRange()
+    
+    /// The size of the TextView
+    @Published
+    public var contentSize: CGSize = .zero
 }
 
 public extension RichTextContext {

@@ -27,6 +27,9 @@ open class RichTextView: NSTextView, RichTextViewComponent {
 
     // MARK: - Properties
 
+    /// The height Constraint of the NSTextView
+    public var heightConstraint: NSLayoutConstraint?
+
     /// The style to use when highlighting text in the view.
     public var highlightingStyle: RichTextHighlightingStyle = .standard
 
@@ -198,6 +201,23 @@ public extension RichTextView {
         textStorage
     }
 }
+
+// MARK: - Content Size
+
+public extension RichTextView {
+
+     var contentSize: CGSize {
+        get {
+            guard let layoutManager = layoutManager, let textContainer = textContainer else {
+                return .zero
+            }
+
+            layoutManager.ensureLayout(for: textContainer)
+            return layoutManager.usedRect(for: textContainer).size
+        }
+    }
+}
+
 
 // MARK: - Additional Pasteboard Types
 
