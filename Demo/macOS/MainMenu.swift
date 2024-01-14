@@ -31,6 +31,7 @@ extension MainMenu {
     var links: some View {
         Group {
             link(to: .editor)
+            link(to: .editorInline)
             link(to: .about)
             webLink(to: .github)
             webLink(to: .documentation)
