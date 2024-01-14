@@ -48,13 +48,19 @@ private extension EditorInlineScreen {
        
         List {
             RichTextEditor(text: .constant(NSAttributedString(string: "red")), context: context, scrollingDisabled: true)
+                .padding()
                 .background(.red)
+                .cornerRadius(12.0)
             
-            RichTextEditor(text: .constant(NSAttributedString(string: "blue")), context: context, scrollingDisabled: true)
-                .background(.blue)
+            RichTextEditor(text: .constant(NSAttributedString(string: "gray")), context: context, scrollingDisabled: true)
+                .padding()
+                .background(.gray)
+                .cornerRadius(12.0)
             
             RichTextEditor(text: .constant(NSAttributedString(string: "purple")), context: context, scrollingDisabled: true)
+                .padding()
                 .background(.purple)
+                .cornerRadius(12.0)
         }
     }
 
