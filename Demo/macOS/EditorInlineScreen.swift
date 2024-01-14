@@ -25,7 +25,7 @@ struct EditorInlineScreen: View {
         VStack(spacing: 0) {
             Divider()
             HStack(spacing: 0) {
-                Text("123")
+                editor
                 Divider()
                 toolbar
             }
@@ -45,22 +45,17 @@ struct EditorInlineScreen: View {
 private extension EditorInlineScreen {
 
     var editor: some View {
-        ZStack {
-            Color.red
-            
-            List {
-                RichTextEditor(text: $text, context: context) {
-                    $0.textContentInset = CGSize(width: 10, height: 20)
-                }
-                .onAppear {
-                    context.scrollingDisabled = true
-                }
-                .frame(minWidth: 400)
-                .focusedValue(\.richTextContext, context)
-            }
-           
-        }
        
+        List {
+            RichTextEditor(text: .constant(NSAttributedString(string: "red")), context: context, scrollingDisabled: true)
+                .background(.red)
+            
+            RichTextEditor(text: .constant(NSAttributedString(string: "blue")), context: context, scrollingDisabled: true)
+                .background(.blue)
+            
+            RichTextEditor(text: .constant(NSAttributedString(string: "purple")), context: context, scrollingDisabled: true)
+                .background(.purple)
+        }
     }
 
     var toolbar: some View {
