@@ -157,6 +157,10 @@ open class RichTextView: NSTextView, RichTextViewComponent {
     open func setRichText(_ text: NSAttributedString) {
         attributedString = text
     }
+    
+    open func setSelectable(_ value: Bool) {
+        isSelectable = value
+    }
 
     /// Undo the latest change.
     open func undoLatestChange() {

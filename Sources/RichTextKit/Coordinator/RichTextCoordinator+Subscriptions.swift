@@ -312,6 +312,17 @@ internal extension RichTextCoordinator {
         guard let newValue else { return }
         textView.setRichText(newValue)
     }
+      
+    var isSelectable: Bool {
+        get {
+            textView.isSelectable
+        }
+        
+        set {
+            textView.isSelectable = newValue
+            textView.isEditable = newValue
+        }  
+    }
 
     func setHighlightedRange(to range: NSRange?) {
         resetHighlightedRangeAppearance()

@@ -58,11 +58,15 @@ public struct RichTextEditor: ViewRepresentable {
     
     private var scrollingDisabled: Bool
     
+    @Binding
+    private var isSelectable: Bool
+    
     public init(
         text: Binding<NSAttributedString>,
         context: RichTextContext,
         format: RichTextDataFormat = .archivedData,
         scrollingDisabled: Bool = false,
+        isSelectable: Binding<Bool> = .constant(true),
         viewConfiguration: @escaping ViewConfiguration = { _ in }
     ) {
       
@@ -72,6 +76,7 @@ public struct RichTextEditor: ViewRepresentable {
         self.format = format
         self.scrollingDisabled = scrollingDisabled
         self.viewConfiguration = viewConfiguration
+        self._isSelectable = isSelectable
     }
 
     public typealias ViewConfiguration = (RichTextViewComponent) -> Void
@@ -126,7 +131,12 @@ public struct RichTextEditor: ViewRepresentable {
         return scrollView
     }
 
-    public func updateNSView(_ view: NSViewType, context: Context) {}
+    public func updateNSView(_ view: NSViewType, context: Context) {
+        
+        if isSelectable != context.coordinator.isSelectable {
+            context.coordinator.isSelectable = isSelectable
+        }
+    }
     #endif
 }
 
