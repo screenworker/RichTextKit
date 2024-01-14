@@ -55,15 +55,22 @@ public struct RichTextEditor: ViewRepresentable {
        - context: The rich text context to use.
        - format: The rich text data format, by default ``RichTextDataFormat/archivedData``.
      */
+    
+    private var scrollingDisabled: Bool
+    
     public init(
         text: Binding<NSAttributedString>,
         context: RichTextContext,
         format: RichTextDataFormat = .archivedData,
+        scrollingDisabled: Bool = false,
         viewConfiguration: @escaping ViewConfiguration = { _ in }
     ) {
+      
         self.text = text
         self._richTextContext = ObservedObject(wrappedValue: context)
+        self.scrollView = scrollingDisabled ? RichTextView.scrollableTextView().documentView! : RichTextView.scrollableTextView()
         self.format = format
+        self.scrollingDisabled = scrollingDisabled
         self.viewConfiguration = viewConfiguration
     }
 
@@ -85,10 +92,10 @@ public struct RichTextEditor: ViewRepresentable {
     #endif
 
     #if macOS
-    public let scrollView = RichTextView.scrollableTextView()
+    public let scrollView: NSView
 
     public var textView: RichTextView {
-        scrollView.documentView as? RichTextView ?? RichTextView()
+        scrollView as? RichTextView ?? RichTextView()
     }
     #endif
 
@@ -114,7 +121,7 @@ public struct RichTextEditor: ViewRepresentable {
 
     #if macOS
     public func makeNSView(context: Context) -> some NSView {
-        textView.setup(with: text.wrappedValue, format: format, scrollingDisabled: richTextContext.scrollingDisabled)
+        textView.setup(with: text.wrappedValue, format: format)
         viewConfiguration(textView)
         return scrollView
     }
@@ -122,7 +129,6 @@ public struct RichTextEditor: ViewRepresentable {
     public func updateNSView(_ view: NSViewType, context: Context) {}
     #endif
 }
-
 
 // MARK: RichTextPresenter
 

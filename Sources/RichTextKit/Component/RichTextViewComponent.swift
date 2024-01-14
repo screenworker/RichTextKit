@@ -31,7 +31,7 @@ public protocol RichTextViewComponent: AnyObject,
 
     /// The text view's frame.
     var frame: CGRect { get }
-
+    
     /// The style to use when highlighting text in the view.
     var highlightingStyle: RichTextHighlightingStyle { get set }
 
@@ -56,8 +56,7 @@ public protocol RichTextViewComponent: AnyObject,
     /// Setup the view with a text and ``RichTextDataFormat``.
     func setup(
         with text: NSAttributedString,
-        format: RichTextDataFormat,
-        scrollingDisabled: Bool
+        format: RichTextDataFormat
     )
 
 
@@ -114,7 +113,7 @@ public extension RichTextViewComponent {
         scrollingDisabled: Bool
     ) throws {
         let string = try NSAttributedString(data: data, format: format)
-        setup(with: string, format: format, scrollingDisabled: scrollingDisabled)
+        setup(with: string, format: format)
     }
 
     /// Get the image configuration for a certain format.

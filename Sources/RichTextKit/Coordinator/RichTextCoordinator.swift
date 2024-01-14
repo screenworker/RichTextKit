@@ -46,8 +46,6 @@ open class RichTextCoordinator: NSObject {
         super.init()
         self.textView.delegate = self
         subscribeToContextChanges()
-        
-        syncContentSize()
     }
 
 
@@ -110,23 +108,21 @@ open class RichTextCoordinator: NSObject {
     #if canImport(AppKit) && !targetEnvironment(macCatalyst)
 
     // MARK: - NSTextViewDelegate
+    
 
     open func textDidBeginEditing(_ notification: Notification) {
         richTextContext.isEditingText = true
-        
-        syncContentSize()
     }
 
     open func textDidChange(_ notification: Notification) {
         syncWithTextView()
 
-        syncContentSize()
+        updateIntrinsicContentSize(notification)
+       
     }
 
     open func textViewDidChangeSelection(_ notification: Notification) {
         syncWithTextView()
-        
-        syncContentSize()
     }
 
     open func textDidEndEditing(_ notification: Notification) {
@@ -174,12 +170,7 @@ extension RichTextCoordinator {
         syncContextWithTextView()
         syncTextWithTextView()
     }
-    
-    func syncContentSize() {
-        DispatchQueue.main.async {
-            self.richTextContext.contentSize = self.textView.contentSize
-        }
-    }
+
 
     /// Sync the rich text context with the text view.
     func syncContextWithTextView() {
@@ -190,6 +181,17 @@ extension RichTextCoordinator {
         } else {
             syncContextWithTextViewAfterDelay()
         }
+    }
+    
+    /**
+     Update the intrinsicContentSize to support inline usage of the rich text editor while scrolling is disabled
+     */
+    func updateIntrinsicContentSize(_ notification: Notification) {
+        guard let textView = notification.object as? NSTextView else { return }
+        
+        let intrinsicContentSize = textView.intrinsicContentSize
+
+        textView.invalidateIntrinsicContentSize()
     }
 
     /**

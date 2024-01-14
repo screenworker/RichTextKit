@@ -163,14 +163,6 @@ public class RichTextContext: ObservableObject {
     /// Set this property to trigger a range change.
     @Published
     var shouldSelectRange = NSRange()
-
-    /// The size of the TextView
-    @Published
-    public var contentSize: CGSize = .zero
-
-    /// Whether or not to disable the scrolling of text view.
-    @Published
-    public var scrollingDisabled: Bool = false
 }
 
 public extension RichTextContext {

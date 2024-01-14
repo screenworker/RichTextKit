@@ -28,20 +28,12 @@ open class RichTextView: NSTextView, RichTextViewComponent {
 
     // MARK: - Properties
 
-    /// The height Constraint of the NSTextView
-    public var heightConstraint: NSLayoutConstraint?
-
     /// The style to use when highlighting text in the view.
     public var highlightingStyle: RichTextHighlightingStyle = .standard
 
     /// The image configuration to use by the rich text view.
     public var imageConfiguration: RichTextImageConfiguration = .disabled
     
-    /**
-     Disables the scrolling in the NSTextView
-     */
-    public var scrollingDisabled: Bool = false
-
     // MARK: - Overrides
 
     /// Paste the current pasteboard content into the view.
@@ -82,21 +74,17 @@ open class RichTextView: NSTextView, RichTextViewComponent {
 
         return super.performDragOperation(draggingInfo)
     }
-
     
-    open override func scrollWheel(with event: NSEvent)
-    {
-        guard scrollingDisabled else {
-            super.scrollWheel(with: event)
-           return
+    //MARK: - Overriden
+    
+    open override var intrinsicContentSize: NSSize {
+        guard let container = textContainer, let manager = container.layoutManager else {
+            return super.intrinsicContentSize
         }
         
-        // 1st nextResponder is NSClipView
-        // 2nd nextResponder is NSScrollView
-        // 3rd nextResponder is NSResponder SwiftUIPlatformViewHost
-        self.nextResponder?.nextResponder?.nextResponder?.scrollWheel(with: event)
+        manager.ensureLayout(for: container)
+        return manager.usedRect(for: container).size
     }
-
 
     // MARK: - Setup
 
@@ -110,10 +98,8 @@ open class RichTextView: NSTextView, RichTextViewComponent {
      */
     open func setup(
         with text: NSAttributedString,
-        format: RichTextDataFormat,
-        scrollingDisabled: Bool = false
+        format: RichTextDataFormat
     ) {
-        self.scrollingDisabled = scrollingDisabled
         attributedString = .empty
         setupInitialFontSize()
         attributedString = text
@@ -222,23 +208,6 @@ public extension RichTextView {
         textStorage
     }
 }
-
-// MARK: - Content Size
-
-public extension RichTextView {
-
-     var contentSize: CGSize {
-        get {
-            guard let layoutManager = layoutManager, let textContainer = textContainer else {
-                return .zero
-            }
-
-            layoutManager.ensureLayout(for: textContainer)
-            return layoutManager.usedRect(for: textContainer).size
-        }
-    }
-}
-
 
 // MARK: - Additional Pasteboard Types
 
